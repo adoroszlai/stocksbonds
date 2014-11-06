@@ -1,0 +1,45 @@
+---
+title: 'Stocks and Bonds: Risks and Returns'
+author: "Attila Doroszlai"
+date: '2014-10-29'
+output: html_document
+---
+
+```{r}
+percent <- function(x, digits = 1) {
+  cat(format(100 * x, digits = digits), '%', "\n")
+}
+```
+
+```{r}
+t <- c(5, 5)
+r <- c(0.155, -0.045)
+b <- 2
+
+# 5.2.3.1.a
+arithmetic_mean_return <- sum(r * b * t) / sum(t)
+percent(arithmetic_mean_return, digits = 1)
+
+# 5.2.3.1.b
+compound_annualized_return <- prod((1 + r * b)^t) ^ (1 / sum(t)) - 1
+percent(arithmetic_mean_return - compound_annualized_return, digits = 2)
+```
+
+```{r}
+r <- c(0.16, 0.06, -0.04, -0.16)
+t <- 2
+ignored <- sapply(c(1, 5), function(b) {
+  # 5.2.3.2 (beta = 1), 5.2.3.4 (beta = 5)
+  arithmetic_mean_return <- mean(r * b)
+  percent(arithmetic_mean_return, digits = 2)
+  
+  # 5.2.3.3 (beta = 1), 5.2.3.5 (beta = 5)
+  outcomes <- (r+1) %*% t((r+1)) - 1
+  favorable <- sum(outcomes >= arithmetic_mean_return)
+  prob <- favorable / length(outcomes)
+  percent(prob, 0)
+})
+```
+
+## 5.2.3.3
+
