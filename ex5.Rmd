@@ -11,6 +11,8 @@ percent <- function(x, digits = 1) {
 }
 ```
 
+## 5.2.3.1
+
 ```{r}
 t <- c(5, 5)
 r <- c(0.155, -0.045)
@@ -24,6 +26,8 @@ percent(arithmetic_mean_return, digits = 1)
 compound_annualized_return <- prod((1 + r * b)^t) ^ (1 / sum(t)) - 1
 percent(arithmetic_mean_return - compound_annualized_return, digits = 2)
 ```
+
+## 5.2.3.2
 
 ```{r}
 r <- c(0.16, 0.06, -0.04, -0.16)
@@ -41,5 +45,30 @@ ignored <- sapply(c(1, 5), function(b) {
 })
 ```
 
-## 5.2.3.3
+## 5.2.4.1
 
+```{r}
+rf <- 0.01 # risk-free rate
+rp <- 0.055 # market risk premium
+vol <- 0.17 # annual
+
+calculate <- function(b) {
+  cat("Expected return: ")
+  percent(rf + b * rp, digits = 3)
+  
+  cat("Standard Deviation: ")
+  percent(b * vol, digits = 3)
+  
+  cat("Sharpe ratio: ", format(rp / vol, digits = 2))
+}
+
+beta = 0.7
+calculate(beta)
+```
+
+## 5.2.4.2
+
+```{r}
+beta = 1.2
+calculate(beta)
+```
