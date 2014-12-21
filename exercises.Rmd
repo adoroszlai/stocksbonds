@@ -6,6 +6,39 @@ output: html_document
 ---
 
 ```{r}
+bond_price <- function(years, coupon.rate, ytm, face.value = 1000, freq = 2) {
+  periods <- years * freq
+  payment <- rep(coupon.rate * face.value / freq, periods)
+  payment[periods] <- payment[periods] + face.value
+  sum(payment / (1 + ytm / freq)^(1:periods))
+}
+```
+
+## 1.4.5.1
+
+`r bond_price(years = 5, coupon.rate = 0.018, ytm = 0.022)`
+
+## 1.4.5.2
+
+`r bond_price(years = 8, coupon.rate = 0.018, ytm = 0.022)`
+
+## 1.4.5.3
+
+`r bond_price(years = 5, coupon.rate = 0.025, ytm = 0.022)`
+
+## 1.4.5.4
+
+`r bond_price(years = 5, coupon.rate = 0.018, ytm = 0.032)`
+
+## 1.6.1
+
+```{r}
+r <- c(0.0013, 0.0039, 0.0079, 0.0121, 0.0162)
+p <- c(50, 50, 50, 50, 1050)
+sum(p / (1 + r)^(1:5))
+```
+
+```{r}
 percent <- function(x, digits = 1) {
   cat(format(100 * x, digits = digits), '%', "\n")
 }
